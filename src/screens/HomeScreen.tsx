@@ -1,13 +1,13 @@
-import {Component} from 'react';
-import {View} from 'react-native-ui-lib';
-import HeaderComponent from '../components/HeaderComponent';
+import {Button, Text, View} from 'react-native-ui-lib';
 
-export default class HomeScreen extends Component {
-  render() {
-    return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <HeaderComponent />
-      </View>
-    );
-  }
+// @ts-ignore
+function HomeScreen({navigation}) {
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Text>Home Screen</Text>
+      <Button onPress={() => navigation.navigate('CalendarScreen')} />
+    </View>
+  );
 }
+
+export default HomeScreen;
