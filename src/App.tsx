@@ -6,7 +6,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import CalendarScreen from './screens/CalendarScreen';
 import AccountShortcut from './ui/Shortcuts/AccountShortcut';
 import BurgerMenu from './ui/BurgerMenu';
-import AccountScreen from './screens/AccountScreen';
+import AccountScreen from './screens/Account/AccountScreen';
 
 library.add(faBars, faUser);
 
