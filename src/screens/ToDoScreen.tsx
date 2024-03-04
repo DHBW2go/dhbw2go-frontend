@@ -9,12 +9,12 @@ const style = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-function GradesScreen() {
+function ToDoScreen() {
   return (
     <View style={style.view}>
-      <Text>Grades Screen</Text>
+      <Text>To-Do Screen</Text>
       <FooterComponent />
     </View>
   );
 }
-export default GradesScreen;
+export default ToDoScreen;
