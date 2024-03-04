@@ -7,6 +7,8 @@ import CalendarScreen from './screens/CalendarScreen';
 import AccountShortcut from './ui/Shortcuts/AccountShortcut';
 import BurgerMenu from './ui/BurgerMenu';
 import AccountScreen from './screens/Account/AccountScreen';
+import ToDoScreen from './screens/ToDoScreen';
+import GradesScreen from './screens/GradesScreen';
 
 library.add(faBars, faUser);
 
@@ -27,7 +29,9 @@ function App() {
         }}>
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
         <Stack.Screen name="CalendarScreen" component={CalendarScreen} />
+        <Stack.Screen name="GradesScreen" component={GradesScreen} />
         <Stack.Screen name="AccountScreen" component={AccountScreen} />
+        <Stack.Screen name="ToDoScreen" component={ToDoScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

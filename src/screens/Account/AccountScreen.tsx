@@ -4,27 +4,31 @@ import {View, Text, Image, Button} from 'react-native-ui-lib';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUser} from '@fortawesome/free-solid-svg-icons';
 import ChangeModal from './ChangeModal';
+import FooterComponent from '../../components/FooterComponent';
 
 const style = StyleSheet.create({
   view: {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    padding: 20,
   },
   image: {
     width: 100,
     height: 100,
+    marginTop: 20,
     marginBottom: 20,
+    marginLeft: 20,
   },
   label: {
     fontSize: 22,
     marginBottom: 10,
+    marginLeft: 20,
   },
   button: {
     fontSize: 22,
     marginBottom: 10,
     ButtonSize: 'large',
+    marginLeft: 20,
   },
 });
 
@@ -71,6 +75,7 @@ function AccountScreen() {
       <Button
         label={'Abmelden'}
         backgroundColor={'#E30813'}
+        style={style.button}
         onPress={() => Alert.alert('Abmelden!')}
       />
       <ChangeModal
@@ -78,6 +83,7 @@ function AccountScreen() {
         onClose={() => setIsChangePasswordModalVisible(false)}
         onChangePassword={handleChangePassword}
       />
+      <FooterComponent />
     </View>
   );
 }

@@ -1,5 +1,6 @@
 import {Text, View} from 'react-native-ui-lib';
 import {StyleSheet} from 'react-native';
+import FooterComponent from '../components/FooterComponent';
 
 const style = StyleSheet.create({
   view: {
@@ -12,6 +13,7 @@ function GradesScreen() {
   return (
     <View style={style.view}>
       <Text>Grades Screen</Text>
+      <FooterComponent />
     </View>
   );
 }
