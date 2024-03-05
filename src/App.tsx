@@ -7,7 +7,7 @@ import CalendarScreen from './screens/CalendarScreen';
 import AccountShortcut from './ui/Shortcuts/AccountShortcut';
 import BurgerMenu from './ui/BurgerMenu';
 import AccountScreen from './screens/Account/AccountScreen';
-import ToDoScreen from './screens/ToDoScreen';
+import ToDoScreen from './screens/ToDo/ToDoScreen';
 import GradesScreen from './screens/GradesScreen';
 
 library.add(faBars, faUser);
