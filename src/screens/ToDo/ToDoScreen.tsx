@@ -28,7 +28,6 @@ function ToDoScreen() {
   const [completedTodos, setCompletedTodos] = useState(mockToDosDone);
   const [text, setText] = useState('');
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [editingTodoId, setEditingTodoId] = useState<number | null>(null);
 
   useEffect(() => {
     // Simulating backend call
@@ -74,14 +73,6 @@ function ToDoScreen() {
 
   const cancelDeleteAllCompletedTodos = () => {
     setShowConfirmationModal(false); // Modal schließen, wenn die Aktion abgebrochen wird
-  };
-
-  const handleTodoTextChange = (id: number, newText: string) => {
-    const updatedTodos = todos.map(todo =>
-      todo.id === id ? {...todo, text: newText} : todo,
-    );
-    setTodos(updatedTodos);
-    setEditingTodoId(null);
   };
 
   const styles = StyleSheet.create({
@@ -169,23 +160,7 @@ function ToDoScreen() {
         <ScrollView style={styles.todos}>
           {todos.map(todo => (
             <View key={todo.id} style={styles.todoItem}>
-              {editingTodoId === todo.id ? (
-                <TextInput
-                  style={{flex: 1}}
-                  value={todo.text}
-                  onChangeText={newText =>
-                    handleTodoTextChange(todo.id, newText)
-                  }
-                  autoFocus={true}
-                  onBlur={() => setEditingTodoId(null)}
-                />
-              ) : (
-                <TouchableOpacity
-                  style={{flex: 1}}
-                  onPress={() => setEditingTodoId(todo.id)}>
-                  <Text>{todo.text}</Text>
-                </TouchableOpacity>
-              )}
+              <Text>{todo.text}</Text>
               <TouchableOpacity onPress={() => markAsCompleted(todo.id)}>
                 <FontAwesomeIcon icon={faCircle} size={25} />
               </TouchableOpacity>
@@ -225,3 +200,4 @@ function ToDoScreen() {
 export default ToDoScreen;
 
 // TODO: To-Do's bearbeitbar machen
+//TODO: Abfrage ob To-Do wirklich gelöscht werden soll
