@@ -243,6 +243,3 @@ function ToDoScreen() {
   );
 }
 export default ToDoScreen;
-
-// TODO: To-Do's bearbeitbar machen
-// TODO: Scrollen nach unten soll nicht automatisch nach oben springen
