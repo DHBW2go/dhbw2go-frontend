@@ -1,5 +1,6 @@
 import {StyleSheet, TouchableWithoutFeedback} from 'react-native';
 import {View, Button, Modal, Text} from 'react-native-ui-lib';
+import React from 'react';
 
 interface ConfirmationModalProps {
   visible: boolean;
@@ -61,7 +62,6 @@ const style = StyleSheet.create({
   button: {
     fontSize: 22,
     marginBottom: 10,
-    ButtonSize: 'large',
   },
   title: {
     fontSize: 20,

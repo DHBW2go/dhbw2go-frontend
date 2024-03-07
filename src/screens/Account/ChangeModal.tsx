@@ -167,7 +167,6 @@ const style = StyleSheet.create({
   button: {
     fontSize: 22,
     marginBottom: 10,
-    ButtonSize: 'large',
   },
 });
 

@@ -9,6 +9,7 @@ import BurgerMenu from './ui/BurgerMenu';
 import AccountScreen from './screens/Account/AccountScreen';
 import ToDoScreen from './screens/ToDo/ToDoScreen';
 import GradesScreen from './screens/GradesScreen';
+import React from 'react';
 
 library.add(faBars, faUser);
 
