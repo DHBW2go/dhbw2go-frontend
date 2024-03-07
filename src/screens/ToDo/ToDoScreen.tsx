@@ -15,6 +15,11 @@ const mockToDos = [
   {id: 1, text: 'Buy groceries'},
   {id: 2, text: 'Clean the house'},
   {id: 3, text: 'Go for a run'},
+  {id: 7, text: 'Do the laundry'},
+  {id: 8, text: 'Call mom'},
+  {id: 9, text: 'Finish the project'},
+  {id: 10, text: 'Buy groceries'},
+  {id: 11, text: 'Clean the house'},
 ];
 
 const mockToDosDone = [
@@ -163,11 +168,14 @@ function ToDoScreen() {
       color: 'white',
       fontWeight: 'bold',
     },
+    scrollView: {
+      marginBottom: 90,
+    },
   });
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView style={styles.scrollView}>
         <Text style={styles.title}>To-Do Liste</Text>
         <TextInput
           style={styles.input}
