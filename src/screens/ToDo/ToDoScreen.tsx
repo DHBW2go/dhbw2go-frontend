@@ -192,17 +192,15 @@ function ToDoScreen() {
               {editingTodoId === todo.id ? (
                 <TextInput
                   style={{flex: 1}}
-                  value={todo.text}
-                  onChangeText={newText =>
-                    handleTodoTextChange(todo.id, newText)
-                  }
+                  value={editingTodoText}
+                  onChangeText={setEditingTodoText}
                   autoFocus={true}
-                  onBlur={() => setEditingTodoId(null)}
+                  onBlur={finishEditingTodo}
                 />
               ) : (
                 <TouchableOpacity
                   style={{flex: 1}}
-                  onPress={() => setEditingTodoId(todo.id)}>
+                  onPress={() => startEditingTodo(todo.id, todo.text)}>
                   <Text>{todo.text}</Text>
                 </TouchableOpacity>
               )}
