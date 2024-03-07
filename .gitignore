@@ -448,7 +448,8 @@ google-services.json
 *.hprof
 
 ### Xcode ###
-
+Podfile.lock
+.xcode.env.local
 
 ### Xcode Patch ###
 *.xcodeproj/*
