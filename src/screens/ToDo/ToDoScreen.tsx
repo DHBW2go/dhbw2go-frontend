@@ -9,7 +9,7 @@ import FooterComponent from '../../components/FooterComponent';
 import React, {useEffect, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCircle, faCircleCheck} from '@fortawesome/free-regular-svg-icons';
-import ConfirmationModal from './ConfirmationModal';
+import ConfirmationDialog from './ConfirmationDialog';
 
 const mockToDos = [
   {id: 1, text: 'Buy groceries'},
@@ -32,7 +32,7 @@ function ToDoScreen() {
   const [todos, setTodos] = useState(mockToDos);
   const [completedTodos, setCompletedTodos] = useState(mockToDosDone);
   const [text, setText] = useState('');
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const [editingTodoId, setEditingTodoId] = useState<number | null>(null);
   const [editingTodoText, setEditingTodoText] = useState('');
 
@@ -70,16 +70,16 @@ function ToDoScreen() {
   };
 
   const deleteAllCompletedTodos = () => {
-    setShowConfirmationModal(true); // Modal anzeigen, wenn alle erledigten To-Dos gelöscht werden sollen
+    setShowConfirmationDialog(true); // Modal anzeigen, wenn alle erledigten To-Dos gelöscht werden sollen
   };
 
   const confirmDeleteAllCompletedTodos = () => {
     setCompletedTodos([]);
-    setShowConfirmationModal(false); // Modal schließen, nachdem die Aktion bestätigt wurde
+    setShowConfirmationDialog(false); // Modal schließen, nachdem die Aktion bestätigt wurde
   };
 
   const cancelDeleteAllCompletedTodos = () => {
-    setShowConfirmationModal(false); // Modal schließen, wenn die Aktion abgebrochen wird
+    setShowConfirmationDialog(false); // Modal schließen, wenn die Aktion abgebrochen wird
   };
 
   const handleTodoTextChange = (id: number, newText: string) => {
@@ -231,8 +231,8 @@ function ToDoScreen() {
           </>
         )}
       </ScrollView>
-      <ConfirmationModal
-        visible={showConfirmationModal}
+      <ConfirmationDialog
+        isVisible={showConfirmationDialog}
         onConfirm={confirmDeleteAllCompletedTodos}
         onCancel={cancelDeleteAllCompletedTodos}
       />
