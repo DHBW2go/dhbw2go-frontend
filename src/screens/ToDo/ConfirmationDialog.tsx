@@ -1,24 +1,27 @@
 import {StyleSheet, TouchableWithoutFeedback} from 'react-native';
-import {View, Button, Modal, Text} from 'react-native-ui-lib';
+import {View, Button, Text, Dialog, PanningProvider} from 'react-native-ui-lib';
 import React from 'react';
 
-interface ConfirmationModalProps {
-  visible: boolean;
+interface ConfirmationDialogProps {
+  isVisible: boolean;
   onConfirm: () => void;
   onCancel: () => void;
 }
 
-function ConfirmationModal({
-  visible,
+function ConfirmationDialog({
+  isVisible,
   onConfirm,
   onCancel,
-}: ConfirmationModalProps) {
+}: ConfirmationDialogProps) {
   const handleOverlayClick = () => {
     onCancel(); // Close the modal when overlay is clicked
   };
 
   return (
-    <Modal visible={visible} transparent>
+    <Dialog
+      visible={isVisible}
+      onDismiss={() => onCancel()}
+      panDirection={PanningProvider.Directions.DOWN}>
       <TouchableWithoutFeedback onPress={handleOverlayClick}>
         <View style={style.overlay} />
       </TouchableWithoutFeedback>
@@ -38,7 +41,7 @@ function ConfirmationModal({
           onPress={() => onCancel()}
         />
       </View>
-    </Modal>
+    </Dialog>
   );
 }
 
@@ -50,14 +53,13 @@ const style = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent black color
   },
   modal: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    justifyContent: 'center',
     backgroundColor: 'white',
     padding: 20,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
   },
   button: {
     fontSize: 22,
@@ -68,4 +70,4 @@ const style = StyleSheet.create({
     marginBottom: 10,
   },
 });
-export default ConfirmationModal;
+export default ConfirmationDialog;
