@@ -5,6 +5,8 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import {View, Button, Modal, Text} from 'react-native-ui-lib';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -62,69 +64,87 @@ const ChangeModal = ({isVisible, onClose, onChangePassword}) => {
 
   return (
     <Modal visible={isVisible} transparent>
-      <TouchableWithoutFeedback onPress={handleOverlayClick}>
-        <View style={style.overlay} />
-      </TouchableWithoutFeedback>
-      <View style={style.modal}>
-        <Text style={style.title}>Passwort ändern</Text>
-        <View style={style.inputContainer}>
-          <TextInput
-            style={[style.input, passwordMismatch && style.inputError]} // Dynamisches Anwenden des Fehlerstils
-            value={newPassword}
-            onChangeText={setNewPassword}
-            onBlur={handleNewPasswordBlur}
-            placeholder="Neues Passwort eingeben"
-            secureTextEntry={!newPasswordVisible} // Verberge das Passwort, wenn newPasswordVisible falsch ist
-          />
-          <TouchableOpacity
-            onPress={toggleNewPasswordVisibility}
-            style={style.showPasswordButton}>
-            {newPasswordVisible ? (
-              <FontAwesomeIcon icon={faEye} size={25} />
-            ) : (
-              <FontAwesomeIcon icon={faEyeSlash} size={25} />
-            )}
-          </TouchableOpacity>
-        </View>
-        <View style={style.inputContainer}>
-          <TextInput
-            style={[style.input, passwordMismatch && style.inputError]} // Dynamisches Anwenden des Fehlerstils
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-            onBlur={handleConfirmPasswordBlur}
-            placeholder="Neues Passwort erneut eingeben"
-            secureTextEntry={!confirmPasswordVisible} // Verberge das Passwort, wenn confirmPasswordVisible falsch ist
-          />
-          <TouchableOpacity
-            onPress={toggleConfirmPasswordVisibility}
-            style={style.showPasswordButton}>
-            {confirmPasswordVisible ? (
-              <FontAwesomeIcon icon={faEye} size={25} />
-            ) : (
-              <FontAwesomeIcon icon={faEyeSlash} size={25} />
-            )}
-          </TouchableOpacity>
-        </View>
-        <Button
-          label={'Passwort ändern'}
-          backgroundColor={'#0d730d'}
-          style={style.button}
-          onPress={() => handleChangePassword()}
-        />
-        <Button
-          label={'Abbrechen'}
-          backgroundColor={'#E30813'}
-          onPress={() => onClose()}
-        />
+      <View style={styles.overlay}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : null}
+          style={{flex: 1}}>
+          <TouchableWithoutFeedback onPress={handleOverlayClick}>
+            <View style={styles.modalContainer}>
+              <View style={styles.modal}>
+                <Text style={styles.title}>Passwort ändern</Text>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={[
+                      styles.input,
+                      passwordMismatch && styles.inputError,
+                    ]}
+                    value={newPassword}
+                    onChangeText={setNewPassword}
+                    onBlur={handleNewPasswordBlur}
+                    placeholder="Neues Passwort eingeben"
+                    secureTextEntry={!newPasswordVisible}
+                  />
+                  <TouchableOpacity
+                    onPress={toggleNewPasswordVisibility}
+                    style={styles.showPasswordButton}>
+                    {newPasswordVisible ? (
+                      <FontAwesomeIcon icon={faEye} size={25} />
+                    ) : (
+                      <FontAwesomeIcon icon={faEyeSlash} size={25} />
+                    )}
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.inputContainer}>
+                  <TextInput
+                    style={[
+                      styles.input,
+                      passwordMismatch && styles.inputError,
+                    ]}
+                    value={confirmPassword}
+                    onChangeText={setConfirmPassword}
+                    onBlur={handleConfirmPasswordBlur}
+                    placeholder="Neues Passwort erneut eingeben"
+                    secureTextEntry={!confirmPasswordVisible}
+                  />
+                  <TouchableOpacity
+                    onPress={toggleConfirmPasswordVisibility}
+                    style={styles.showPasswordButton}>
+                    {confirmPasswordVisible ? (
+                      <FontAwesomeIcon icon={faEye} size={25} />
+                    ) : (
+                      <FontAwesomeIcon icon={faEyeSlash} size={25} />
+                    )}
+                  </TouchableOpacity>
+                </View>
+                <Button
+                  label={'Passwort ändern'}
+                  backgroundColor={'#0d730d'}
+                  style={styles.button}
+                  onPress={() => handleChangePassword()}
+                />
+                <Button
+                  label={'Abbrechen'}
+                  backgroundColor={'#E30813'}
+                  onPress={() => onClose()}
+                />
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
       </View>
     </Modal>
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent black color
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modal: {
     position: 'absolute',
@@ -167,7 +187,6 @@ const style = StyleSheet.create({
   button: {
     fontSize: 22,
     marginBottom: 10,
-    ButtonSize: 'large',
   },
 });
 

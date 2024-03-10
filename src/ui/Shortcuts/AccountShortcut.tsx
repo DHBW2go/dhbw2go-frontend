@@ -3,6 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUser} from '@fortawesome/free-solid-svg-icons';
 import {StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import React from 'react';
 
 const style = StyleSheet.create({
   button: {

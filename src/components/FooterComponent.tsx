@@ -8,6 +8,7 @@ import {
   faChartBar,
   faRectangleList,
 } from '@fortawesome/free-regular-svg-icons';
+import React from "react";
 
 // @ts-ignore
 function FooterComponent() {
