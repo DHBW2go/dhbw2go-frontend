@@ -1,6 +1,7 @@
 import {Button, Text, View} from 'react-native-ui-lib';
 import React, {useState} from 'react';
 import {
+  Alert,
   ScrollView,
   StyleSheet,
   TextInput,
@@ -10,28 +11,54 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 import {useNavigation} from '@react-navigation/native';
 
-function RegistrationScreen() {
+const RegistrationScreen = ({onChangePassword}) => {
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [passwordMismatch, setPasswordMismatch] = useState(false);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
-
-  const handleNewPasswordBlur = () => {
-    if (password.trim() === '') {
-      setPasswordMismatch(false); // Setze passwordMismatch zurück, wenn der Inhalt des Textfelds leer ist
-    }
-  };
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const navigation = useNavigation();
+  const toggleConfirmPasswordVisibility = () => {
+    setConfirmPasswordVisible(!confirmPasswordVisible);
+  };
 
-  const navigateToCourseScreen = () => {
-    // @ts-ignore
-    navigation.navigate('CourseScreen');
+  const handlePasswordBlur = () => {
+    if (password.trim() === '') {
+      setPasswordMismatch(false); // Setze passwordMismatch zurück, wenn der Inhalt des Textfelds leer ist
+    }
+  };
+
+  const handleConfirmPasswordBlur = () => {
+    if (confirmPassword.trim() === '') {
+      setPasswordMismatch(false); // Setze passwordMismatch zurück, wenn der Inhalt des Textfelds leer ist
+    }
+  };
+
+  //const navigation = useNavigation();
+
+  //navigation.navigate('CourseScreen');
+  const handleSetPassword = () => {
+    // Überprüfe, ob die Eingaben für das neue Passwort gleich sind
+    if (password !== confirmPassword) {
+      // Falls nicht, zeige eine Fehlermeldung an
+      Alert.alert('Fehler', 'Die Passwörter stimmen nicht überein.');
+      setPasswordMismatch(true); // Setze passwordMismatch auf true, um den roten Rahmen anzuzeigen
+      return;
+    }
+
+    // Falls die Eingaben übereinstimmen, sende das Passwort ans Backend
+    //onChangePassword(password);
+
+    // Setze die Eingabefelder zurück
+    setPassword('');
+    setConfirmPassword('');
+    setPasswordMismatch(false); // Setze passwordMismatch zurück
   };
 
   const styles = StyleSheet.create({
@@ -55,9 +82,18 @@ function RegistrationScreen() {
       marginBottom: 10,
       marginTop: 10,
       paddingHorizontal: 10,
+      overflow: 'hidden',
     },
     inputContainer: {
       flexDirection: 'row',
+    },
+    inputError: {
+      height: 40,
+      borderWidth: 1,
+      width: '100%',
+      borderColor: '#E30813', // Setze den Rahmen auf rot bei Fehlanpassung
+      marginBottom: 10,
+      paddingHorizontal: 10,
     },
     showPasswordButton: {
       padding: 10,
@@ -98,12 +134,13 @@ function RegistrationScreen() {
         <Text style={styles.label}>Passwort:</Text>
         <View style={styles.inputContainer}>
           <TextInput
-            style={styles.input}
+            style={[styles.input, passwordMismatch && styles.inputError]}
             value={password}
             onChangeText={setPassword}
-            onBlur={handleNewPasswordBlur}
+            onBlur={handlePasswordBlur}
             placeholder="Passwort eingeben"
             secureTextEntry={!passwordVisible}
+            textContentType="none"
           />
           <TouchableOpacity
             onPress={togglePasswordVisibility}
@@ -118,17 +155,18 @@ function RegistrationScreen() {
         <Text style={styles.label}>Passwort wiederholen:</Text>
         <View style={styles.inputContainer}>
           <TextInput
-            style={styles.input}
-            value={password}
-            onChangeText={setPassword}
-            onBlur={handleNewPasswordBlur}
+            style={[styles.input, passwordMismatch && styles.inputError]}
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            onBlur={handleConfirmPasswordBlur}
             placeholder="Passwort nochmals eingeben"
-            secureTextEntry={!passwordVisible}
+            secureTextEntry={!confirmPasswordVisible}
+            textContentType="none"
           />
           <TouchableOpacity
-            onPress={togglePasswordVisibility}
+            onPress={toggleConfirmPasswordVisibility}
             style={styles.showPasswordButton}>
-            {passwordVisible ? (
+            {confirmPasswordVisible ? (
               <FontAwesomeIcon icon={faEye} size={25} />
             ) : (
               <FontAwesomeIcon icon={faEyeSlash} size={25} />
@@ -138,10 +176,10 @@ function RegistrationScreen() {
         <Button
           label={'Weiter'}
           style={styles.button}
-          onPress={navigateToCourseScreen}></Button>
+          onPress={handleSetPassword}></Button>
       </ScrollView>
     </View>
   );
-}
+};
 
 export default RegistrationScreen;
