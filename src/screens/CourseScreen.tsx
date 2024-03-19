@@ -1,7 +1,7 @@
-import { Button, Text, View } from "react-native-ui-lib";
+import {Button, Text, View} from 'react-native-ui-lib';
 import {StyleSheet} from 'react-native';
 import React from 'react';
-import { useNavigation } from "@react-navigation/native";
+import {useNavigation} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   view: {
@@ -36,7 +36,6 @@ function CourseScreen() {
   const registrate = () => {
     console.log('Registrierung abschließen');
     navigateToHomeScreen();
-    // TODO: Nach Navigation zum HomeScreen, die Anmeldungsseite unzugänglich machen
   };
 
   return (
@@ -48,7 +47,8 @@ function CourseScreen() {
       <Button
         style={styles.button}
         label={'Registrierung abschließen'}
-        onPress={registrate}></Button>
+        onPress={registrate}
+      />
     </View>
   );
 }
