@@ -1,17 +1,23 @@
 import {Text, View} from 'react-native-ui-lib';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {
   faBuilding,
   faCalendar,
   faChartBar,
   faRectangleList,
 } from '@fortawesome/free-regular-svg-icons';
-import React from "react";
+import React from 'react';
 
 // @ts-ignore
 function FooterComponent() {
+  const route = useRoute();
+
+  const getIconColor = screenName => {
+    return screenName === route.name ? '#8B0000' : '#23303b';
+  };
+
   const style = StyleSheet.create({
     footer: {
       flexDirection: 'row',
@@ -27,9 +33,6 @@ function FooterComponent() {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-    },
-    icon: {
-      color: '#000000',
     },
   });
 
@@ -55,19 +58,35 @@ function FooterComponent() {
   return (
     <View style={style.footer}>
       <TouchableOpacity style={style.tile} onPress={navigateToHomeScreen}>
-        <FontAwesomeIcon icon={faBuilding} size={30} style={style.icon} />
+        <FontAwesomeIcon
+          icon={faBuilding}
+          size={30}
+          color={getIconColor('HomeScreen')}
+        />
         <Text>Home</Text>
       </TouchableOpacity>
       <TouchableOpacity style={style.tile} onPress={navigateToCalendarScreen}>
-        <FontAwesomeIcon icon={faCalendar} size={30} style={style.icon} />
+        <FontAwesomeIcon
+          icon={faCalendar}
+          size={30}
+          color={getIconColor('CalendarScreen')}
+        />
         <Text>Kalender</Text>
       </TouchableOpacity>
       <TouchableOpacity style={style.tile} onPress={navigateToGradesScreen}>
-        <FontAwesomeIcon icon={faChartBar} size={30} style={style.icon} />
+        <FontAwesomeIcon
+          icon={faChartBar}
+          size={30}
+          color={getIconColor('GradesScreen')}
+        />
         <Text>Noten</Text>
       </TouchableOpacity>
       <TouchableOpacity style={style.tile} onPress={navigateToToDoScreen}>
-        <FontAwesomeIcon icon={faRectangleList} size={30} style={style.icon} />
+        <FontAwesomeIcon
+          icon={faRectangleList}
+          size={30}
+          color={getIconColor('ToDoScreen')}
+        />
         <Text>To-Do's</Text>
       </TouchableOpacity>
     </View>
