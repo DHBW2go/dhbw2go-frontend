@@ -1,17 +1,18 @@
-import HomeScreen from './screens/HomeScreen';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {NavigationContainer} from '@react-navigation/native';
-import CalendarScreen from './screens/CalendarScreen';
-import AccountShortcut from './ui/Shortcuts/AccountShortcut';
-import BurgerMenu from './ui/BurgerMenu';
-import AccountScreen from './screens/Account/AccountScreen';
-import ToDoScreen from './screens/ToDo/ToDoScreen';
-import GradesScreen from './screens/GradesScreen';
-import React, {useState} from 'react';
-import LoginScreen from './screens/LoginScreen';
-import RegistrationScreen from './screens/RegistrationScreen';
-import WelcomeScreen from './screens/WelcomeScreen';
-import CourseScreen from './screens/CourseScreen';
+import HomeScreen from "./screens/HomeScreen";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+import CalendarScreen from "./screens/CalendarScreen";
+import AccountShortcut from "./ui/Shortcuts/AccountShortcut";
+import BurgerMenu from "./ui/BurgerMenu";
+import AccountScreen from "./screens/Account/AccountScreen";
+import ToDoScreen from "./screens/ToDo/ToDoScreen";
+import GradesScreen from "./screens/GradesScreen";
+import React, { useState } from "react";
+import LoginScreen from "./screens/LoginScreen";
+import RegistrationScreen from "./screens/Registration/RegistrationScreen";
+import WelcomeScreen from "./screens/WelcomeScreen";
+import CourseScreen from "./screens/Registration/CourseScreen";
+import axios from "axios";
 
 const Stack = createNativeStackNavigator();
 const HeaderRight = () => <AccountShortcut />;
@@ -19,15 +20,27 @@ const HeaderLeft = () => <BurgerMenu />;
 const HeaderWelcomeRight = () => <></>;
 const HeaderWelcomeLeft = () => <></>;
 
+axios.defaults.baseURL = "http://127.0.0.1:8080/";
+axios.defaults.headers.post["Content-Type"] = "application/json";
+
 function App() {
-  const getIsSignedIn = () => {
+  const getSignInState = () => {
     // custom logic
     return false;
   };
-  const [isSignedIn, setIsSignedIn] = useState(getIsSignedIn());
-  //const handleSignIn = (value: boolean) => {
-  //setIsSignedIn(value);
-  //};
+
+  const signIn = (authenticationToken: any) => {
+    // custom logic
+    console.log(authenticationToken);
+    setIsSignedIn(true);
+  };
+
+  const signOut = () => {
+    // custom logic
+    setIsSignedIn(false);
+  };
+
+  const [isSignedIn, setIsSignedIn] = useState(getSignInState());
 
   return (
     <NavigationContainer>
@@ -70,13 +83,13 @@ function App() {
             />
             <Stack.Screen
               name="AccountScreen"
-              component={AccountScreen}
               options={{
                 headerTitle: 'Account',
-                headerRight: HeaderRight,
-                headerLeft: HeaderLeft,
-              }}
-            />
+                headerRight: HeaderWelcomeRight,
+                headerLeft: HeaderWelcomeLeft
+              }}>
+              {props => <AccountScreen {...props} signOut={signOut} />}
+            </Stack.Screen>
             <Stack.Screen
               name="ToDoScreen"
               component={ToDoScreen}
@@ -101,9 +114,7 @@ function App() {
                 headerRight: HeaderWelcomeRight,
                 headerLeft: HeaderWelcomeLeft,
               }}>
-              {props => (
-                <LoginScreen {...props} setIsSignedIn={setIsSignedIn} />
-              )}
+              {props => <LoginScreen {...props} signIn={signIn} />}
             </Stack.Screen>
             <Stack.Screen
               name="RegistrationScreen"
@@ -116,13 +127,13 @@ function App() {
             />
             <Stack.Screen
               name="CourseScreen"
-              component={CourseScreen}
               options={{
                 headerTitle: 'Kursauswahl',
                 headerRight: HeaderWelcomeRight,
                 headerLeft: HeaderWelcomeLeft,
-              }}
-            />
+              }}>
+              {props => <CourseScreen {...props} signIn={signIn} />}
+            </Stack.Screen>
           </>
         )}
       </Stack.Navigator>
