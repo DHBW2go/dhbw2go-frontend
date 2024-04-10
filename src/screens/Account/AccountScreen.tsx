@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
-import { Button, Image, Text, View } from "react-native-ui-lib";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import ChangeModal from "./ChangeModal";
-import FooterComponent from "../../components/FooterComponent";
+import React, {useEffect, useState} from 'react';
+import {StyleSheet} from 'react-native';
+import {Button, Image, Text, View} from 'react-native-ui-lib';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faUser} from '@fortawesome/free-solid-svg-icons';
+import ChangeModal from './ChangeModal';
+import FooterComponent from '../../components/FooterComponent';
+import {useNavigation} from '@react-navigation/native';
 
 const style = StyleSheet.create({
   view: {
@@ -38,7 +39,8 @@ const mockBackendData = {
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF_BtB3w_jb8m-8SkMsQ1dbA7L7-ZqDrWC8llSddRKwA&s',
 };
 
-function AccountScreen({ signOut }: { signOut: () => void }) {
+function AccountScreen({signOut}: {signOut: () => void}) {
+  const navigation = useNavigation();
   const [userData, setUserData] = useState(mockBackendData);
   const [isChangePasswordModalVisible, setIsChangePasswordModalVisible] =
     useState(false);
@@ -59,7 +61,7 @@ function AccountScreen({ signOut }: { signOut: () => void }) {
   const logout = () => {
     signOut();
     // @ts-ignore
-    navigation.navigate("WelcomeScreen");
+    navigation.navigate('WelcomeScreen');
   };
 
   return (
@@ -81,7 +83,7 @@ function AccountScreen({ signOut }: { signOut: () => void }) {
         label={'Abmelden'}
         backgroundColor={'#E30813'}
         style={style.button}
-        onPress={() => logout}
+        onPress={logout}
       />
       <ChangeModal
         isVisible={isChangePasswordModalVisible}

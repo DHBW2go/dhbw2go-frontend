@@ -1,18 +1,19 @@
-import HomeScreen from "./screens/HomeScreen";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
-import CalendarScreen from "./screens/CalendarScreen";
-import AccountShortcut from "./ui/Shortcuts/AccountShortcut";
-import BurgerMenu from "./ui/BurgerMenu";
-import AccountScreen from "./screens/Account/AccountScreen";
-import ToDoScreen from "./screens/ToDo/ToDoScreen";
-import GradesScreen from "./screens/GradesScreen";
-import React, { useState } from "react";
-import LoginScreen from "./screens/LoginScreen";
-import RegistrationScreen from "./screens/Registration/RegistrationScreen";
-import WelcomeScreen from "./screens/WelcomeScreen";
-import CourseScreen from "./screens/Registration/CourseScreen";
-import axios from "axios";
+import HomeScreen from './screens/HomeScreen';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import CalendarScreen from './screens/CalendarScreen';
+import AccountShortcut from './ui/Shortcuts/AccountShortcut';
+import BurgerMenu from './ui/BurgerMenu';
+import AccountScreen from './screens/Account/AccountScreen';
+import ToDoScreen from './screens/ToDo/ToDoScreen';
+import GradesScreen from './screens/GradesScreen';
+import React, {useState} from 'react';
+import LoginScreen from './screens/LoginScreen';
+import RegistrationScreen from './screens/Registration/RegistrationScreen';
+import WelcomeScreen from './screens/WelcomeScreen';
+import CourseScreen from './screens/Registration/CourseScreen';
+import axios from 'axios';
+import {MMKV} from 'react-native-mmkv';
 
 const Stack = createNativeStackNavigator();
 const HeaderRight = () => <AccountShortcut />;
@@ -20,23 +21,29 @@ const HeaderLeft = () => <BurgerMenu />;
 const HeaderWelcomeRight = () => <></>;
 const HeaderWelcomeLeft = () => <></>;
 
-axios.defaults.baseURL = "http://127.0.0.1:8080/";
-axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.baseURL = 'http://127.0.0.1:8080/';
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+const storage = new MMKV();
 
 function App() {
   const getSignInState = () => {
-    // custom logic
-    return false;
+    return (
+      storage.contains('accessToken') &&
+      storage.contains('refreshToken') &&
+      storage.contains('tokenType')
+    );
   };
 
   const signIn = (authenticationToken: any) => {
-    // custom logic
-    console.log(authenticationToken);
+    storage.set('accessToken', authenticationToken.accessToken);
+    storage.set('refreshToken', authenticationToken.refreshToken);
+    storage.set('tokenType', authenticationToken.tokenType);
     setIsSignedIn(true);
   };
 
   const signOut = () => {
-    // custom logic
+    storage.clearAll();
     setIsSignedIn(false);
   };
 
@@ -86,7 +93,7 @@ function App() {
               options={{
                 headerTitle: 'Account',
                 headerRight: HeaderWelcomeRight,
-                headerLeft: HeaderWelcomeLeft
+                headerLeft: HeaderWelcomeLeft,
               }}>
               {props => <AccountScreen {...props} signOut={signOut} />}
             </Stack.Screen>
