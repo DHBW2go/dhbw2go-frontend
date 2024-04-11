@@ -1,12 +1,12 @@
-import { Button, Text, View } from "react-native-ui-lib";
-import React, { useState } from "react";
-import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
+import {Button, Text, View} from 'react-native-ui-lib';
+import React, {useState} from 'react';
+import {StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
+import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 
-function LoginScreen({ signIn }: { signIn: (authenticationToken: any) => void }) {
+function LoginScreen({signIn}: {signIn: (authenticationToken: any) => void}) {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,18 +16,18 @@ function LoginScreen({ signIn }: { signIn: (authenticationToken: any) => void })
     setPasswordVisible(!passwordVisible);
   };
 
-  const login = () => {
+  const postLogin = () => {
     axios
-      .post("/authentication/login", {
+      .post('/authentication/login', {
         username: email,
-        password: password
+        password: password,
       })
-      .then(function(response) {
+      .then(function (response) {
         signIn(response.data);
         // @ts-ignore
-        navigation.navigate("HomeScreen");
+        navigation.navigate('HomeScreen');
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   };
@@ -106,7 +106,7 @@ function LoginScreen({ signIn }: { signIn: (authenticationToken: any) => void })
           )}
         </TouchableOpacity>
       </View>
-      <Button label={"Anmelden"} style={styles.button} onPress={login} />
+      <Button label={'Anmelden'} style={styles.button} onPress={postLogin} />
     </View>
   );
 }

@@ -1,8 +1,8 @@
-import { Button, Text, View } from "react-native-ui-lib";
-import { StyleSheet } from "react-native";
-import React from "react";
-import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
+import {Button, Text, View} from 'react-native-ui-lib';
+import {StyleSheet} from 'react-native';
+import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 
 const styles = StyleSheet.create({
   view: {
@@ -28,32 +28,32 @@ const styles = StyleSheet.create({
 });
 
 function CourseScreen({
-                        route,
-                        signIn
-                      }: {
+  route,
+  signIn,
+}: {
   route: any;
   signIn: (authenticationToken: any) => void;
 }) {
   const navigation = useNavigation();
-  const { password, email, name } = route.params;
+  const {password, email, name} = route.params;
 
-  const register = () => {
+  const putRegister = () => {
     axios
-      .put("/authentication/register", {
+      .put('/authentication/register', {
         username: email,
         password: password,
         name: name,
-        location: "/",
-        faculty: "/",
-        program: "/",
-        course: "/"
+        location: '/',
+        faculty: '/',
+        program: '/',
+        course: '/',
       })
-      .then(function(response) {
+      .then(function (response) {
         signIn(response.data);
         // @ts-ignore
-        navigation.navigate("HomeScreen");
+        navigation.navigate('HomeScreen');
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   };
@@ -67,7 +67,7 @@ function CourseScreen({
       <Button
         style={styles.button}
         label={'Registrierung abschließen'}
-        onPress={register}
+        onPress={putRegister}
       />
     </View>
   );
