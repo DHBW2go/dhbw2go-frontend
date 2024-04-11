@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, Alert} from 'react-native';
-import {View, Text, Image, Button} from 'react-native-ui-lib';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet} from 'react-native';
+import {Button, Image, Text, View} from 'react-native-ui-lib';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUser} from '@fortawesome/free-solid-svg-icons';
 import ChangeModal from './ChangeModal';
 import FooterComponent from '../../components/FooterComponent';
+import {useNavigation} from '@react-navigation/native';
 
 const style = StyleSheet.create({
   view: {
@@ -38,7 +39,8 @@ const mockBackendData = {
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRF_BtB3w_jb8m-8SkMsQ1dbA7L7-ZqDrWC8llSddRKwA&s',
 };
 
-function AccountScreen() {
+function AccountScreen({signOut}: {signOut: () => void}) {
+  const navigation = useNavigation();
   const [userData, setUserData] = useState(mockBackendData);
   const [isChangePasswordModalVisible, setIsChangePasswordModalVisible] =
     useState(false);
@@ -51,9 +53,15 @@ function AccountScreen() {
   }, []);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleChangePassword = (newPassword: string) => {
+  const changePassword = (newPassword: string) => {
     // Logic to change password
     setIsChangePasswordModalVisible(false);
+  };
+
+  const logout = () => {
+    signOut();
+    // @ts-ignore
+    navigation.navigate('WelcomeScreen');
   };
 
   return (
@@ -75,12 +83,12 @@ function AccountScreen() {
         label={'Abmelden'}
         backgroundColor={'#E30813'}
         style={style.button}
-        onPress={() => Alert.alert('Abmelden!')}
+        onPress={logout}
       />
       <ChangeModal
         isVisible={isChangePasswordModalVisible}
         onClose={() => setIsChangePasswordModalVisible(false)}
-        onChangePassword={handleChangePassword}
+        onChangePassword={changePassword}
       />
       <FooterComponent />
     </View>
