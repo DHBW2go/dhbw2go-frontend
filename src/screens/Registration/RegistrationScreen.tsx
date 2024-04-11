@@ -1,17 +1,12 @@
-import {Button, Text, View} from 'react-native-ui-lib';
-import React, {useState} from 'react';
-import {
-  Alert,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
-import {useNavigation} from '@react-navigation/native';
+import { Button, Text, View } from "react-native-ui-lib";
+import React, { useState } from "react";
+import { Alert, ScrollView, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { useNavigation } from "@react-navigation/native";
 
-const RegistrationScreen = ({onChangePassword}) => {
+function RegistrationScreen() {
+  const navigation = useNavigation();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -40,9 +35,6 @@ const RegistrationScreen = ({onChangePassword}) => {
     }
   };
 
-  //const navigation = useNavigation();
-
-  //navigation.navigate('CourseScreen');
   const handleSetPassword = () => {
     // Überprüfe, ob die Eingaben für das neue Passwort gleich sind
     if (password !== confirmPassword) {
@@ -52,8 +44,9 @@ const RegistrationScreen = ({onChangePassword}) => {
       return;
     }
 
-    // Falls die Eingaben übereinstimmen, sende das Passwort ans Backend
-    //onChangePassword(password);
+    // Falls die Eingaben übereinstimmen, zum CourseScreen navigieren
+    // @ts-ignore
+    navigation.navigate("CourseScreen", { password, email, name });
 
     // Setze die Eingabefelder zurück
     setPassword('');
@@ -176,10 +169,11 @@ const RegistrationScreen = ({onChangePassword}) => {
         <Button
           label={'Weiter'}
           style={styles.button}
-          onPress={handleSetPassword}></Button>
+          onPress={handleSetPassword}
+        />
       </ScrollView>
     </View>
   );
-};
+}
 
 export default RegistrationScreen;

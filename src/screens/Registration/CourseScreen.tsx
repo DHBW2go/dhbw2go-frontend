@@ -2,6 +2,7 @@ import {Button, Text, View} from 'react-native-ui-lib';
 import {StyleSheet} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 
 const styles = StyleSheet.create({
   view: {
@@ -26,16 +27,35 @@ const styles = StyleSheet.create({
   },
 });
 
-function CourseScreen() {
+function CourseScreen({
+  route,
+  signIn,
+}: {
+  route: any;
+  signIn: (authenticationToken: any) => void;
+}) {
   const navigation = useNavigation();
+  const {password, email, name} = route.params;
 
-  const navigateToHomeScreen = () => {
-    // @ts-ignore
-    navigation.navigate('HomeScreen');
-  };
-  const registrate = () => {
-    console.log('Registrierung abschließen');
-    navigateToHomeScreen();
+  const putRegister = () => {
+    axios
+      .put('/authentication/register', {
+        username: email,
+        password: password,
+        name: name,
+        location: '/',
+        faculty: '/',
+        program: '/',
+        course: '/',
+      })
+      .then(function (response) {
+        signIn(response.data);
+        // @ts-ignore
+        navigation.navigate('HomeScreen');
+      })
+      .catch(function (error) {
+        //Handle error
+      });
   };
 
   return (
@@ -47,7 +67,7 @@ function CourseScreen() {
       <Button
         style={styles.button}
         label={'Registrierung abschließen'}
-        onPress={registrate}
+        onPress={putRegister}
       />
     </View>
   );

@@ -1,19 +1,26 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import {
   Alert,
-  StyleSheet,
-  TextInput,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
-} from 'react-native';
-import {View, Button, Modal, Text} from 'react-native-ui-lib';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback
+} from "react-native";
+import { Button, Modal, Text, View } from "react-native-ui-lib";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
-// @ts-ignore
-const ChangeModal = ({isVisible, onClose, onChangePassword}) => {
+function ChangeModal({
+                       isVisible,
+                       onClose,
+                       onChangePassword
+                     }: {
+  isVisible: boolean;
+  onClose: () => void;
+  onChangePassword: (value: String) => void;
+}) {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
@@ -134,7 +141,7 @@ const ChangeModal = ({isVisible, onClose, onChangePassword}) => {
       </View>
     </Modal>
   );
-};
+}
 
 const styles = StyleSheet.create({
   overlay: {

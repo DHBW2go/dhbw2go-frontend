@@ -1,7 +1,7 @@
-import {Text, View} from 'react-native-ui-lib';
-import {StyleSheet} from 'react-native';
-import FooterComponent from '../components/FooterComponent';
-import React from 'react';
+import { Text, View } from "react-native-ui-lib";
+import { StyleSheet } from "react-native";
+import FooterComponent from "../components/FooterComponent";
+import React from "react";
 
 const style = StyleSheet.create({
   view: {
@@ -11,7 +11,6 @@ const style = StyleSheet.create({
   },
 });
 
-// @ts-ignore
 function CalendarScreen() {
   return (
     <View style={style.view}>
