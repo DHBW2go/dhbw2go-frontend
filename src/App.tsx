@@ -28,16 +28,19 @@ function App() {
   const storage = new MMKV();
 
   const getSignInState = () => {
-    return storage.contains('refreshToken');
+    return storage.contains('refreshToken') && storage.contains('accessToken') && storage.contains('tokenType');
   };
 
   const signIn = (authenticationToken: any) => {
+    storage.set('accessToken', authenticationToken.accessToken);
     storage.set('refreshToken', authenticationToken.refreshToken);
+    storage.set('tokenType', authenticationToken.tokenType);
     axios.defaults.headers['Authorization'] = `${authenticationToken.tokenType} ${authenticationToken.accessToken}`;
     setIsSignedIn(true);
   };
 
   const signOut = () => {
+    axios.defaults.headers['Authorization'] = '';
     storage.clearAll();
     setIsSignedIn(false);
   };
@@ -49,7 +52,9 @@ function App() {
     if (refreshToken) {
       const response = await axios.post('/authentication/refresh', { refreshToken: refreshToken });
       const authenticationToken = response.data;
+      storage.set('accessToken', authenticationToken.accessToken);
       storage.set('refreshToken', authenticationToken.refreshToken);
+      storage.set('tokenType', authenticationToken.tokenType);
       axios.defaults.headers['Authorization'] = `${authenticationToken.tokenType} ${authenticationToken.accessToken}`;
       return authenticationToken;
     }

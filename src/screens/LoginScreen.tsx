@@ -28,7 +28,7 @@ function LoginScreen({signIn}: {signIn: (authenticationToken: any) => void}) {
         navigation.navigate('HomeScreen');
       })
       .catch(function (error) {
-        console.log(error);
+        //Handle error
       });
   };
 

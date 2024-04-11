@@ -54,7 +54,7 @@ function CourseScreen({
         navigation.navigate('HomeScreen');
       })
       .catch(function (error) {
-        console.log(error);
+        //Handle error
       });
   };
 
