@@ -1,9 +1,15 @@
-import { Button, Text, View } from "react-native-ui-lib";
-import React, { useState } from "react";
-import { Alert, ScrollView, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { useNavigation } from "@react-navigation/native";
+import {Button, Text, View} from 'react-native-ui-lib';
+import React, {useState} from 'react';
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
+import {useNavigation} from '@react-navigation/native';
 
 function RegistrationScreen() {
   const navigation = useNavigation();
@@ -46,7 +52,7 @@ function RegistrationScreen() {
 
     // Falls die Eingaben übereinstimmen, zum CourseScreen navigieren
     // @ts-ignore
-    navigation.navigate("CourseScreen", { password, email, name });
+    navigation.navigate('CourseScreen', {password, email, name});
 
     // Setze die Eingabefelder zurück
     setPassword('');
