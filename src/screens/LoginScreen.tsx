@@ -71,11 +71,10 @@ function LoginScreen({signIn}: {signIn: (authenticationToken: any) => void}) {
       backgroundColor: '#23303b',
       padding: 10,
       borderRadius: 10,
-      margin: 10,
+      marginTop: 10,
       alignItems: 'center',
     },
   });
-
   return (
     <View style={styles.view}>
       <Text style={styles.label}>E-Mail:</Text>
@@ -107,6 +106,12 @@ function LoginScreen({signIn}: {signIn: (authenticationToken: any) => void}) {
         </TouchableOpacity>
       </View>
       <Button label={'Anmelden'} style={styles.button} onPress={postLogin} />
+      <Text style={styles.labelRegister}>Noch keinen Account?</Text>
+      <Button
+        label={'Registrieren'}
+        style={styles.button}
+        onPress={() => navigation.navigate('RegistrationScreen')}
+      />
     </View>
   );
 }
