@@ -10,7 +10,6 @@ import GradesScreen from './screens/GradesScreen';
 import React, {useState} from 'react';
 import LoginScreen from './screens/LoginScreen';
 import RegistrationScreen from './screens/Registration/RegistrationScreen';
-import WelcomeScreen from './screens/WelcomeScreen';
 import CourseScreen from './screens/Registration/CourseScreen';
 import axios, {AxiosResponse} from 'axios';
 import {MMKV} from 'react-native-mmkv';
@@ -92,7 +91,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={isSignedIn ? 'HomeScreen' : 'WelcomeScreen'}
+        initialRouteName={isSignedIn ? 'HomeScreen' : 'LoginScreen'}
         screenOptions={{
           headerTitleStyle: {
             fontWeight: 'bold',
@@ -149,11 +148,6 @@ function App() {
           </>
         ) : (
           <>
-            <Stack.Screen
-              name="WelcomeScreen"
-              component={WelcomeScreen}
-              options={() => ({headerTitle: 'Willkommen'})}
-            />
             <Stack.Screen
               name="LoginScreen"
               options={{
