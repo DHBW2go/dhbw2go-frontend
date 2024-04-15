@@ -12,7 +12,7 @@ import LoginScreen from './screens/LoginScreen';
 import RegistrationScreen from './screens/Registration/RegistrationScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import CourseScreen from './screens/Registration/CourseScreen';
-import axios, { AxiosResponse } from "axios";
+import axios, {AxiosResponse} from 'axios';
 import {MMKV} from 'react-native-mmkv';
 
 const Stack = createNativeStackNavigator();
@@ -28,19 +28,23 @@ function App() {
   const storage = new MMKV();
 
   const getSignInState = () => {
-    return storage.contains('refreshToken') && storage.contains('accessToken') && storage.contains('tokenType');
+    return (
+      storage.contains('refreshToken') &&
+      storage.contains('accessToken') &&
+      storage.contains('tokenType')
+    );
   };
 
   const signIn = (authenticationToken: any) => {
     storage.set('accessToken', authenticationToken.accessToken);
     storage.set('refreshToken', authenticationToken.refreshToken);
     storage.set('tokenType', authenticationToken.tokenType);
-    axios.defaults.headers['Authorization'] = `${authenticationToken.tokenType} ${authenticationToken.accessToken}`;
+    axios.defaults.headers.Authorization = `${authenticationToken.tokenType} ${authenticationToken.accessToken}`;
     setIsSignedIn(true);
   };
 
   const signOut = () => {
-    axios.defaults.headers['Authorization'] = '';
+    axios.defaults.headers.Authorization = '';
     storage.clearAll();
     setIsSignedIn(false);
   };
@@ -50,12 +54,14 @@ function App() {
   const postAuthenticationToken = async () => {
     const refreshToken = storage.getString('refreshToken');
     if (refreshToken) {
-      const response = await axios.post('/authentication/refresh', { refreshToken: refreshToken });
+      const response = await axios.post('/authentication/refresh', {
+        refreshToken: refreshToken,
+      });
       const authenticationToken = response.data;
       storage.set('accessToken', authenticationToken.accessToken);
       storage.set('refreshToken', authenticationToken.refreshToken);
       storage.set('tokenType', authenticationToken.tokenType);
-      axios.defaults.headers['Authorization'] = `${authenticationToken.tokenType} ${authenticationToken.accessToken}`;
+      axios.defaults.headers.Authorization = `${authenticationToken.tokenType} ${authenticationToken.accessToken}`;
       return authenticationToken;
     }
     throw new Error('No refresh token found!');
@@ -63,16 +69,16 @@ function App() {
 
   axios.interceptors.response.use(
     (response: AxiosResponse) => {
-      console.log("response", response);
+      console.log('response', response);
       return response;
     },
-    async (error) => {
-      console.log("error", error);
+    async error => {
+      console.log('error', error);
       if (error.response.status === 403) {
         try {
           const authenticationToken = await postAuthenticationToken();
           const originalRequest = error.config;
-          originalRequest.headers['Authorization'] = `${authenticationToken.tokenType} ${authenticationToken.accessToken}`;
+          originalRequest.headers.Authorization = `${authenticationToken.tokenType} ${authenticationToken.accessToken}`;
           return await axios(originalRequest);
         } catch (authenticationTokenError) {
           signOut();
@@ -80,7 +86,7 @@ function App() {
         }
       }
       return Promise.reject(error);
-    }
+    },
   );
 
   return (

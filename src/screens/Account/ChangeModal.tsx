@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
@@ -6,17 +6,17 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  TouchableWithoutFeedback
-} from "react-native";
-import { Button, Modal, Text, View } from "react-native-ui-lib";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+  TouchableWithoutFeedback,
+} from 'react-native';
+import {Button, Modal, Text, View} from 'react-native-ui-lib';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 
 function ChangeModal({
-                       isVisible,
-                       onClose,
-                       onChangePassword
-                     }: {
+  isVisible,
+  onClose,
+  onChangePassword,
+}: {
   isVisible: boolean;
   onClose: () => void;
   onChangePassword: (value: String) => void;

@@ -1,6 +1,6 @@
-import { Text, View } from "react-native-ui-lib";
-import FooterComponent from "../components/FooterComponent";
-import React from "react";
+import {Text, View} from 'react-native-ui-lib';
+import FooterComponent from '../components/FooterComponent';
+import React from 'react';
 
 function HomeScreen() {
   return (

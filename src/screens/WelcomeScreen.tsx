@@ -1,7 +1,7 @@
-import { Button, Text, View } from "react-native-ui-lib";
-import { StyleSheet } from "react-native";
-import React from "react";
-import { useNavigation } from "@react-navigation/native";
+import {Button, Text, View} from 'react-native-ui-lib';
+import {StyleSheet} from 'react-native';
+import React from 'react';
+import {useNavigation} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   view: {
